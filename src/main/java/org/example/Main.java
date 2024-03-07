@@ -40,5 +40,22 @@ public class Main {
         System.out.println(travelPackage.getName() + "  " +
                 travelPackage.getDestinations()
         );
+
+        /**
+         * 2. Print the passenger list of the travel package including:
+         * a. package name,
+         * b. passenger capacity,
+         * c. number of passengers currently enrolled and
+         * d. name and number of each passenger
+         */
+        System.out.println(travelPackage.getName() + " " +
+                travelPackage.getPassengerCapacity() + " " +
+                travelPackage.getPassengers().size() + " " +
+                travelPackage.getPassengers().stream().map(passenger ->
+                        "Passenger{" +
+                        "name='" + passenger.getName() + '\'' +
+                        ", number=" + passenger.getNumber() +
+                        '}').toList());
+
     }
 }
