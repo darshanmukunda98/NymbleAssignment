@@ -21,3 +21,5 @@ W
 'src/main/java/org/example/Activity.java,4/0/40e84e712bb552b62b3006cdd6e4cb55ef6d07d4
 Z
 *src/main/java/org/example/Destination.java,3/a/3aab5d166b312454af17e481367c3aa0674cb8fa
+\
+,src/main/java/org/example/TravelPackage.java,e/9/e9f0429e56c1e8fd2229dd29a4fb60c13caa54ab
