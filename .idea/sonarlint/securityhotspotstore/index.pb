@@ -19,3 +19,5 @@ X
 (src/main/java/org/example/Passenger.java,c/0/c014b5eb320f42997cf889efcf3c79edf3aaf876
 W
 'src/main/java/org/example/Activity.java,4/0/40e84e712bb552b62b3006cdd6e4cb55ef6d07d4
+Z
+*src/main/java/org/example/Destination.java,3/a/3aab5d166b312454af17e481367c3aa0674cb8fa
