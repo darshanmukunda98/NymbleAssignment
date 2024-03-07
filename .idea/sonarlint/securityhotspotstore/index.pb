@@ -15,3 +15,5 @@ D
 -.idea/sonarlint/securityhotspotstore/index.pb,8/8/88a9255124c95bdc913197c120a8d560edc59c8e
 7
 pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+X
+(src/main/java/org/example/Passenger.java,c/0/c014b5eb320f42997cf889efcf3c79edf3aaf876
