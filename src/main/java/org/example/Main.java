@@ -1,36 +1,44 @@
 package org.example;
 
 
-import java.util.List;
 
 public class Main {
 
 
     public static void main(String[] args) {
-        List<Activity> goaPackageActivities = List.of(
-                new Activity("Music","Playing music", 100.0, 10),
-                new Activity("Drawing","Drawing scenery", 200.0, 20),
-                new Activity("Photography","Outdoor Photography", 300.0, 30),
-                new Activity("Reading","Reading classic books", 400.0, 40),
-                new Activity("Sports","Playing football", 500.0, 50));
+        Destination goa = new Destination("Goa");
+        Activity music = new Activity("Music","Playing music", 100.0, 10, goa);
+        Activity drawing = new Activity("Drawing","Drawing scenery", 200.0, 10, goa);
+        Activity photography = new Activity("Photography","Outdoor Photography", 300.0, 10, goa);
+        Activity reading = new Activity("Reading","Reading classic books", 400.0, 10, goa);
+        Activity sports = new Activity("Sports","Playing football", 500.0, 10, goa);
 
-        List<Activity> pondicherryPackageActivities = List.of(
-                new Activity("Surfing", "Learning to surf on the beach", 150.0, 15),
-                new Activity("Yoga", "Morning yoga sessions by the sea", 250.0, 25),
-                new Activity("Boat Ride", "Scenic boat ride along the coast", 350.0, 35),
-                new Activity("Beach Volleyball", "Fun games of beach volleyball", 450.0, 45),
-                new Activity("Goa Cuisine", "Cooking classes for Goan cuisine", 550.0, 55));
+        Destination pondicherry = new Destination("Pondicherry");
+        Activity surfing =new Activity("Surfing", "Learning to surf on the beach", 150.0, 10, pondicherry);
+        Activity yoga = new Activity("Yoga", "Morning yoga sessions by the sea", 250.0, 10, pondicherry);
+        Activity boatRide = new Activity("Boat Ride", "Scenic boat ride along the coast", 350.0, 10, pondicherry);
+        Activity beachVolleyball = new Activity("Beach Volleyball", "Fun games of beach volleyball", 450.0, 10, pondicherry);
+        Activity goaCuisine = new Activity("Goa Cuisine", "Cooking classes for Goan cuisine", 550.0, 10, pondicherry);
 
-        Destination goa = new Destination("Goa", goaPackageActivities);
-        Destination pondicherry = new Destination("Pondicherry", pondicherryPackageActivities);
 
-        Passenger darshan = new Passenger("Darshan", 111, 1000.0);
-        Passenger sandeep = new Passenger("Sandeep", 222, 2000.0);
+        Passenger darshan = new Passenger("Darshan", 111, Passenger.MembershipType.GOLD);
+        darshan.setBalance(500);
+        Passenger sandeep = new Passenger("Sandeer", 222, Passenger.MembershipType.PREMIUM);
+        sandeep.setBalance(1000);
+        Passenger akash = new Passenger("Akash", 333, Passenger.MembershipType.STANDARD);
+        akash.setBalance(1500);
 
-        TravelPackage travelPackage = new TravelPackage("Goa Pondicherry Package",
-                10,
-                List.of(goa, pondicherry),
-                List.of(darshan, sandeep));
+        TravelPackage travelPackage = new TravelPackage("Goa Pondicherry Package",10);
+        travelPackage.addDestination(goa);
+        travelPackage.addDestination(pondicherry);
+        travelPackage.addPassenger(darshan);
+        travelPackage.addPassenger(sandeep);
+
+        darshan.addActivity(music);
+        darshan.addActivity(drawing);
+
+        sandeep.addActivity(surfing);
+        sandeep.addActivity(boatRide);
         System.out.println("*************************************");
         /**
          1. Print itinerary of the travel package including:
@@ -47,6 +55,16 @@ public class Main {
          * d. name and number of each passenger
          */
         printPassengerList(travelPackage);
+
+        /**
+         * 3. Print the details of an individual passenger including their
+         * 	a. name,
+         * 	b. passenger number,
+         * 	c. balance (if applicable),
+         * 	d. list of each activity they have signed up for,
+         * 	including the destination the at which the activity is taking place and the price the passenger
+         */
+        printPassengerDetails(darshan);
     }
     private static void printItinerary(TravelPackage travelPackage){
         System.out.println("Package Name: "+ travelPackage.getName());
@@ -67,4 +85,31 @@ public class Main {
                     passenger.getNumber());
         }
     }
+    private static void printPassengerDetails(Passenger passenger){
+        System.out.println("Passenger Name: " + passenger.getName());
+        System.out.println("Passenger Number: " + passenger.getNumber());
+        if (passenger.getType() == Passenger.MembershipType.STANDARD || passenger.getType() == Passenger.MembershipType.GOLD) {
+            System.out.println("Balance: " + passenger.getBalance());
+        }
+        System.out.println("Activities Signed Up For:");
+        for (Activity activity : passenger.getActivities()) {
+            System.out.println("Activity: " + activity.getName() + ", Destination: " +
+                    activity.getDestination().getName() + ", Price: " + calculatePrice(passenger, activity));
+        }
+    }
+    private static double calculatePrice(Passenger passenger, Activity activity) {
+        if (passenger.getType() == Passenger.MembershipType.PREMIUM) {
+            return 0;
+        } else if (passenger.getType() == Passenger.MembershipType.STANDARD) {
+            return activity.getCost();
+        } else {
+            double discountedPrice = activity.getCost() * 0.9;
+            if (passenger.getBalance() >= discountedPrice) {
+                return discountedPrice;
+            } else {
+                return 0;
+            }
+        }
+    }
+
 }

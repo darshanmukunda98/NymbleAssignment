@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TravelPackage {
@@ -8,43 +9,34 @@ public class TravelPackage {
     private List<Destination> destinations;
     private List<Passenger> passengers;
 
-    public TravelPackage(String name, int passengerCapacity, List<Destination> destinations, List<Passenger> passengers) {
+    public TravelPackage(String name, int passengerCapacity) {
         this.name = name;
         this.passengerCapacity = passengerCapacity;
-        this.destinations = destinations;
-        this.passengers = passengers;
+        this.destinations = new ArrayList<>();
+        this.passengers = new ArrayList<>();
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getPassengerCapacity() {
         return passengerCapacity;
-    }
-
-    public void setPassengerCapacity(int passengerCapacity) {
-        this.passengerCapacity = passengerCapacity;
     }
 
     public List<Destination> getDestinations() {
         return destinations;
     }
 
-    public void setDestinations(List<Destination> destinations) {
-        this.destinations = destinations;
-    }
-
     public List<Passenger> getPassengers() {
         return passengers;
     }
+    public void addDestination(Destination destination) {
+        destinations.add(destination);
+    }
 
-    public void setPassengers(List<Passenger> passengers) {
-        this.passengers = passengers;
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
     }
 
     @Override
