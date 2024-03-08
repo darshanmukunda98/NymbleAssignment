@@ -37,9 +37,7 @@ public class Main {
          a. travel package name,
          b. destinations and details of the activities available at each destination, like name, cost, capacity and description
          */
-        System.out.println(travelPackage.getName() + "  " +
-                travelPackage.getDestinations()
-        );
+        printItinerary(travelPackage);
 
         /**
          * 2. Print the passenger list of the travel package including:
@@ -57,5 +55,15 @@ public class Main {
                         ", number=" + passenger.getNumber() +
                         '}').toList());
 
+    }
+    private static void printItinerary(TravelPackage travelPackage){
+        System.out.println("Package Name: "+ travelPackage.getName());
+        for(Destination destination : travelPackage.getDestinations()){
+            System.out.println("Destination: "+destination.getName());
+            for(Activity activity : destination.getActivities()){
+                System.out.println("Activity: " + activity.getName() + ", Cost: " + activity.getCost() +
+                        ", Capacity: " + activity.getCapacity() + ", Description: " + activity.getDescription());
+            }
+        }
     }
 }
