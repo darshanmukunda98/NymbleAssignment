@@ -31,14 +31,14 @@ public class Main {
                 10,
                 List.of(goa, pondicherry),
                 List.of(darshan, sandeep));
-
+        System.out.println("*************************************");
         /**
          1. Print itinerary of the travel package including:
          a. travel package name,
          b. destinations and details of the activities available at each destination, like name, cost, capacity and description
          */
         printItinerary(travelPackage);
-
+        System.out.println("*************************************");
         /**
          * 2. Print the passenger list of the travel package including:
          * a. package name,
@@ -46,15 +46,7 @@ public class Main {
          * c. number of passengers currently enrolled and
          * d. name and number of each passenger
          */
-        System.out.println(travelPackage.getName() + " " +
-                travelPackage.getPassengerCapacity() + " " +
-                travelPackage.getPassengers().size() + " " +
-                travelPackage.getPassengers().stream().map(passenger ->
-                        "Passenger{" +
-                        "name='" + passenger.getName() + '\'' +
-                        ", number=" + passenger.getNumber() +
-                        '}').toList());
-
+        printPassengerList(travelPackage);
     }
     private static void printItinerary(TravelPackage travelPackage){
         System.out.println("Package Name: "+ travelPackage.getName());
@@ -64,6 +56,15 @@ public class Main {
                 System.out.println("Activity: " + activity.getName() + ", Cost: " + activity.getCost() +
                         ", Capacity: " + activity.getCapacity() + ", Description: " + activity.getDescription());
             }
+        }
+    }
+    private static void printPassengerList(TravelPackage travelPackage){
+        System.out.println("Package Name: "+travelPackage.getName());
+        System.out.println("Passenger Capacity: " + travelPackage.getPassengerCapacity());
+        System.out.println("Number of Passengers Enrolled: " + travelPackage.getPassengers().size());
+        for (Passenger passenger : travelPackage.getPassengers()) {
+            System.out.println("Passenger Name: " + passenger.getName() + ", Passenger Number: " +
+                    passenger.getNumber());
         }
     }
 }
