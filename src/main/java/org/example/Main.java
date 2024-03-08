@@ -1,6 +1,8 @@
 package org.example;
 
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -23,7 +25,7 @@ public class Main {
 
         Passenger darshan = new Passenger("Darshan", 111, Passenger.MembershipType.GOLD);
         darshan.setBalance(500);
-        Passenger sandeep = new Passenger("Sandeer", 222, Passenger.MembershipType.PREMIUM);
+        Passenger sandeep = new Passenger("Sandeep", 222, Passenger.MembershipType.PREMIUM);
         sandeep.setBalance(1000);
         Passenger akash = new Passenger("Akash", 333, Passenger.MembershipType.STANDARD);
         akash.setBalance(1500);
@@ -55,7 +57,7 @@ public class Main {
          * d. name and number of each passenger
          */
         printPassengerList(travelPackage);
-
+        System.out.println("*************************************");
         /**
          * 3. Print the details of an individual passenger including their
          * 	a. name,
@@ -64,7 +66,16 @@ public class Main {
          * 	d. list of each activity they have signed up for,
          * 	including the destination the at which the activity is taking place and the price the passenger
          */
-        printPassengerDetails(darshan);
+        for (Passenger passenger : travelPackage.getPassengers()) {
+            printPassengerDetails(passenger);
+        }
+        System.out.println("***************************************");
+
+        /**
+         * 4. Print the details of all the activities that still have spaces available, including how many spaces are available.
+         */
+        printAvailableActivities(travelPackage);
+
     }
     private static void printItinerary(TravelPackage travelPackage){
         System.out.println("Package Name: "+ travelPackage.getName());
@@ -109,6 +120,27 @@ public class Main {
             } else {
                 return 0;
             }
+        }
+    }
+    public static void printAvailableActivities(TravelPackage travelPackage) {
+        System.out.println("Activities with Available Spaces:");
+        Map<String, Integer> availableSpaces = new HashMap<>();
+        for (Destination destination : travelPackage.getDestinations()) {
+            for (Activity activity : destination.getActivities()) {
+                int signedUpPassengers = 0;
+                for (Passenger passenger : travelPackage.getPassengers()) {
+                    if (passenger.getActivities().contains(activity)) {
+                        signedUpPassengers++;
+                    }
+                }
+                int availableSpacesCount = activity.getCapacity() - signedUpPassengers;
+                if (availableSpacesCount > 0) {
+                    availableSpaces.put(activity.getName(), availableSpacesCount);
+                }
+            }
+        }
+        for (Map.Entry<String, Integer> entry : availableSpaces.entrySet()) {
+            System.out.println("Activity: " + entry.getKey() + ", Available Spaces: " + entry.getValue());
         }
     }
 
