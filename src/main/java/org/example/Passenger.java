@@ -40,8 +40,11 @@ public class Passenger {
     public List<Activity> getActivities(){
         return activities;
     }
-    public void addActivity(Activity activity){
+    public void addActivity(Activity activity)throws Exception{
+        if(TravelPackageService.calculatePrice(this, activity)    <= this.balance)
         activities.add(activity);
+        else
+            throw new Exception(this.getName()+ " cannot afford. Out of balance");
     }
 
     @Override

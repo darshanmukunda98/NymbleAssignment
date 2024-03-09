@@ -4,6 +4,8 @@ package org.example;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.example.TravelPackageService.*;
+
 public class Main {
 
 
@@ -14,6 +16,8 @@ public class Main {
         Activity photography = new Activity("Photography","Outdoor Photography", 300.0, 10, goa);
         Activity reading = new Activity("Reading","Reading classic books", 400.0, 10, goa);
         Activity sports = new Activity("Sports","Playing football", 500.0, 10, goa);
+        goa.addActivities(music);
+        goa.addActivities(drawing);
 
         Destination pondicherry = new Destination("Pondicherry");
         Activity surfing =new Activity("Surfing", "Learning to surf on the beach", 150.0, 10, pondicherry);
@@ -21,6 +25,9 @@ public class Main {
         Activity boatRide = new Activity("Boat Ride", "Scenic boat ride along the coast", 350.0, 10, pondicherry);
         Activity beachVolleyball = new Activity("Beach Volleyball", "Fun games of beach volleyball", 450.0, 10, pondicherry);
         Activity goaCuisine = new Activity("Goa Cuisine", "Cooking classes for Goan cuisine", 550.0, 10, pondicherry);
+        pondicherry.addActivities(surfing);
+        pondicherry.addActivities(boatRide);
+
 
 
         Passenger darshan = new Passenger("Darshan", 111, Passenger.MembershipType.GOLD);
@@ -33,14 +40,25 @@ public class Main {
         TravelPackage travelPackage = new TravelPackage("Goa Pondicherry Package",10);
         travelPackage.addDestination(goa);
         travelPackage.addDestination(pondicherry);
-        travelPackage.addPassenger(darshan);
-        travelPackage.addPassenger(sandeep);
+        try {
+            travelPackage.addPassenger(sandeep);
+            travelPackage.addPassenger(darshan);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            darshan.addActivity(music);
+            darshan.addActivity(drawing);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
-        darshan.addActivity(music);
-        darshan.addActivity(drawing);
-
-        sandeep.addActivity(surfing);
-        sandeep.addActivity(boatRide);
+        try {
+            sandeep.addActivity(surfing);
+            sandeep.addActivity(boatRide);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         System.out.println("*************************************");
         /**
          1. Print itinerary of the travel package including:
@@ -76,72 +94,6 @@ public class Main {
          */
         printAvailableActivities(travelPackage);
 
-    }
-    private static void printItinerary(TravelPackage travelPackage){
-        System.out.println("Package Name: "+ travelPackage.getName());
-        for(Destination destination : travelPackage.getDestinations()){
-            System.out.println("Destination: "+destination.getName());
-            for(Activity activity : destination.getActivities()){
-                System.out.println("Activity: " + activity.getName() + ", Cost: " + activity.getCost() +
-                        ", Capacity: " + activity.getCapacity() + ", Description: " + activity.getDescription());
-            }
-        }
-    }
-    private static void printPassengerList(TravelPackage travelPackage){
-        System.out.println("Package Name: "+travelPackage.getName());
-        System.out.println("Passenger Capacity: " + travelPackage.getPassengerCapacity());
-        System.out.println("Number of Passengers Enrolled: " + travelPackage.getPassengers().size());
-        for (Passenger passenger : travelPackage.getPassengers()) {
-            System.out.println("Passenger Name: " + passenger.getName() + ", Passenger Number: " +
-                    passenger.getNumber());
-        }
-    }
-    private static void printPassengerDetails(Passenger passenger){
-        System.out.println("Passenger Name: " + passenger.getName());
-        System.out.println("Passenger Number: " + passenger.getNumber());
-        if (passenger.getType() == Passenger.MembershipType.STANDARD || passenger.getType() == Passenger.MembershipType.GOLD) {
-            System.out.println("Balance: " + passenger.getBalance());
-        }
-        System.out.println("Activities Signed Up For:");
-        for (Activity activity : passenger.getActivities()) {
-            System.out.println("Activity: " + activity.getName() + ", Destination: " +
-                    activity.getDestination().getName() + ", Price: " + calculatePrice(passenger, activity));
-        }
-    }
-    private static double calculatePrice(Passenger passenger, Activity activity) {
-        if (passenger.getType() == Passenger.MembershipType.PREMIUM) {
-            return 0;
-        } else if (passenger.getType() == Passenger.MembershipType.STANDARD) {
-            return activity.getCost();
-        } else {
-            double discountedPrice = activity.getCost() * 0.9;
-            if (passenger.getBalance() >= discountedPrice) {
-                return discountedPrice;
-            } else {
-                return 0;
-            }
-        }
-    }
-    public static void printAvailableActivities(TravelPackage travelPackage) {
-        System.out.println("Activities with Available Spaces:");
-        Map<String, Integer> availableSpaces = new HashMap<>();
-        for (Destination destination : travelPackage.getDestinations()) {
-            for (Activity activity : destination.getActivities()) {
-                int signedUpPassengers = 0;
-                for (Passenger passenger : travelPackage.getPassengers()) {
-                    if (passenger.getActivities().contains(activity)) {
-                        signedUpPassengers++;
-                    }
-                }
-                int availableSpacesCount = activity.getCapacity() - signedUpPassengers;
-                if (availableSpacesCount > 0) {
-                    availableSpaces.put(activity.getName(), availableSpacesCount);
-                }
-            }
-        }
-        for (Map.Entry<String, Integer> entry : availableSpaces.entrySet()) {
-            System.out.println("Activity: " + entry.getKey() + ", Available Spaces: " + entry.getValue());
-        }
     }
 
 }

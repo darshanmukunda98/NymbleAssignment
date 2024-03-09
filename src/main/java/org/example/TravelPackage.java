@@ -5,13 +5,19 @@ import java.util.List;
 
 public class TravelPackage {
     private String name;
-    private int passengerCapacity;
+    private int currentCapacity;
+    private int totalCapacity;
+
+    public void setDestinations(List<Destination> destinations) {
+        this.destinations = destinations;
+    }
+
     private List<Destination> destinations;
     private List<Passenger> passengers;
 
     public TravelPackage(String name, int passengerCapacity) {
         this.name = name;
-        this.passengerCapacity = passengerCapacity;
+        this.totalCapacity = passengerCapacity;
         this.destinations = new ArrayList<>();
         this.passengers = new ArrayList<>();
     }
@@ -21,7 +27,7 @@ public class TravelPackage {
     }
 
     public int getPassengerCapacity() {
-        return passengerCapacity;
+        return totalCapacity;
     }
 
     public List<Destination> getDestinations() {
@@ -35,15 +41,19 @@ public class TravelPackage {
         destinations.add(destination);
     }
 
-    public void addPassenger(Passenger passenger) {
-        passengers.add(passenger);
+    public void addPassenger(Passenger passenger) throws Exception {
+        if (this.currentCapacity == totalCapacity) {
+            throw new Exception("Package reached it's capacity");
+        }
+        this.passengers.add(passenger);
+        this.currentCapacity++;
     }
 
     @Override
     public String toString() {
         return "TravelPackage{" +
                 "name='" + name + '\'' +
-                ", passengerCapacity=" + passengerCapacity +
+                ", passengerCapacity=" + totalCapacity +
                 ", destinations=" + destinations +
                 ", passengers=" + passengers +
                 '}';
