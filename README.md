@@ -82,7 +82,3 @@ The code should adhere to the following guidelines.
 2. Low-Level Diagram
 3. Source Code
 ---
-### Submission
-Upload the code to Github and share the repository link. It must be a mono repo project. Make sure it is a public repository.
-
-Or you can compress the project (.zip)
