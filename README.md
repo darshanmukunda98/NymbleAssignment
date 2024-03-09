@@ -1,8 +1,11 @@
-# NymbleAssignment
+### Prerequisites
+> 1. Java 8
+> 2. Maven
 
-![🎗️](data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==)![🎗️](https://notion-emojis.s3-us-west-2.amazonaws.com/prod/svg-twitter/1f397-fe0f.svg)
+## Steps to Run
 
-## Software Design Task (JAVA)
+1. ``` mvn install ```
+2. ``` java -jar target/NymbleAssignment-1.0-SNAPSHOT.jar ```
 
 ### Task
 Design, implement and test a software system that allows travel agencies to maintain their travel packages' itinerary and passengers.
